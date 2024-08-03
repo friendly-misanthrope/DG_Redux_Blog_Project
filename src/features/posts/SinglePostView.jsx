@@ -1,11 +1,15 @@
 import { useSelector } from 'react-redux';
 import { selectPostById } from './postsSlice';
+import { useParams } from 'react-router-dom';
 
 import AuthorView from './AuthorView';
 import CreatedAtView from './CreatedAtView';
 import ReactionButtonsView from './ReactionButtonsView';
 
 const SinglePostView = () => {
+
+  const { postId } = useParams();
+
   const post = useSelector((state) => selectPostById(state, postId));
 
   if (!post) {
