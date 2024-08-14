@@ -79,7 +79,7 @@ const postsSlice = createSlice({
 });
 
 export const selectAllPosts = (state) => state.posts.posts;
-export const selectOnePost = (state, postId) => {
+export const selectPostById = (state, postId) => {
   state.posts.posts.find(post => post.id === postId);
 } 
 export const getPostsStatus = (state) => state.posts.status;
