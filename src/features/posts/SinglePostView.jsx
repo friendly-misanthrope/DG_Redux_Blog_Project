@@ -7,17 +7,11 @@ import ReactionsView from './ReactionsView';
 
 const SinglePostView = () => {
 
-  const post = useSelector((state) => selectPostById(state, postId));
   const { postId } = useParams();
+  const post = useSelector((state) => selectPostById(state, Number(postId)));
 
-  if (!post) {
+  if (post) {
     return (
-      <section>
-        <h2>This post doesn't exist!</h2>
-      </section>
-    );
-  }
-  return (
     <article>
       <h2>{post.title}</h2>
       <p>{post.body}</p>
@@ -27,6 +21,13 @@ const SinglePostView = () => {
       </p>
       <ReactionsView post={post} />
     </article>
-  )
+    );
+  }
+  return (
+    <section>
+      <h2>This post doesn't exist!</h2>
+    </section>
+  );
 }
+
 export default SinglePostView;
