@@ -85,6 +85,10 @@ article {
   padding: 1em;
 }
 
+article p {
+  white-space: pre-wrap;
+}
+
 h1 {
   font-size: 3.5rem;
 }

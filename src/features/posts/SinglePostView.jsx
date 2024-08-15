@@ -9,6 +9,7 @@ const SinglePostView = () => {
 
   const { postId } = useParams();
   const post = useSelector((state) => selectPostById(state, Number(postId)));
+  console.log(post)
 
   if (post) {
     return (

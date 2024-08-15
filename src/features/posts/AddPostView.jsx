@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "./postsSlice";
 import { selectAllUsers } from "../users/usersSlice";
@@ -15,6 +16,9 @@ const AddPostView = () => {
   const users = useSelector(selectAllUsers);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const {title, body, userId} = post;
 
   const postChangeHandler = (e) => {
@@ -39,6 +43,7 @@ const AddPostView = () => {
         console.error('Unable to save post', e);
       } finally {
         setPostReqStatus('idle');
+        navigate('/');
       }
     }
   }
