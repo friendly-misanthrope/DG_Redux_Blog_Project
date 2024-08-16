@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "./postsSlice";
-import { selectAllUsers } from "../users/usersSlice";
+import UsersOptions from './UsersOptions';
 
 const AddPostView = () => {
   const [post, setPost] = useState({
@@ -13,16 +13,14 @@ const AddPostView = () => {
 
   const [postReqStatus, setPostReqStatus] = useState('idle');
 
-  const users = useSelector(selectAllUsers);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const {title, body, userId} = post;
 
   const postChangeHandler = (e) => {
-    setPost(prevState => {return {...prevState, [e.target.name]: e.target.value}});
+    setPost(prevState => {
+      return {...prevState, [e.target.name]: e.target.value}
+    });
   }
 
   const postIsValid = [title, body, userId].every(Boolean) && postReqStatus === 'idle';
@@ -48,12 +46,6 @@ const AddPostView = () => {
     }
   }
 
-  const usersOptions = users.map((user) => (
-    <option key={user.id} value={user.id}>
-      {user.name}
-    </option>
-  ));
-
   return (
     <section>
       <h2>Add a New Post</h2>
@@ -66,9 +58,11 @@ const AddPostView = () => {
         onChange={postChangeHandler} />
 
         <label htmlFor="userId">Author: </label>
-        <select name="userId" id="userId" value={userId} onChange={postChangeHandler}>
-          <option value=""></option>
-          {usersOptions}
+        <select name="userId"
+        id="userId"
+        value={userId}
+        onChange={postChangeHandler}>
+          <UsersOptions />
         </select>
 
         <label htmlFor="body">Post Content: </label>
@@ -79,7 +73,11 @@ const AddPostView = () => {
         value={body}
         onChange={postChangeHandler} />
 
-        <button onClick={savePostOnClick} disabled={!postIsValid}>Save Post</button>
+        <button
+        onClick={savePostOnClick}
+        disabled={!postIsValid}>
+          Save Post
+        </button>
       </form>
     </section>
   );
