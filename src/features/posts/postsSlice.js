@@ -12,12 +12,19 @@ const initialState = {
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', () => (
   axios.get(POSTS_URL)
     .then((response) => response.data)
+    .catch(e => console.log(e))
 ));
 
 export const addPost = createAsyncThunk('posts/addPost', (newPost) => (
   axios.post(POSTS_URL, newPost)
     .then((response) => response.data)
 ));
+
+export const editPost = createAsyncThunk('posts/editPost', async (editedPost) => {
+  const { id } = editedPost;
+  return await axios.put(`${POSTS_URL}/${id}`, editedPost)
+    .then((response) => response.data)
+});
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -74,7 +81,17 @@ const postsSlice = createSlice({
           coffee: 0
         }
         state.posts.push(action.payload);
-      });
+      })
+      .addCase(editPost.fulfilled, (state, action) => {
+        action.payload.userId = Number(action.payload.userId)
+        if (!action.payload?.id) {
+          console.error("No post ID provided, update failed\n", action.payload);
+          return;
+        }
+        const { id } = action.payload;
+        const posts = state.posts.filter(post => post.id !== id);
+        state.posts = [...posts, action.payload]
+      })
   } 
 });
 

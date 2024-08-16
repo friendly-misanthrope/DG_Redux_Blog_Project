@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { selectPostById, updatePost } from "./postsSlice";
+import { selectPostById, editPost } from "./postsSlice";
 import UsersOptions from "./UsersOptions";
 
 
@@ -10,7 +10,7 @@ const EditPostView = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const postToEdit = useSelector((state) => selectPostById(Number(state, postId)));
+  const postToEdit = useSelector((state) => selectPostById(state, Number(postId)));
 
   if (!postToEdit) {
     return (
@@ -22,12 +22,16 @@ const EditPostView = () => {
 
   const [postReqStatus, setPostReqStatus] = useState('idle');
   const [editedPost, setEditedPost] = useState({
+    id: postToEdit.id,
     title: postToEdit.title,
     body: postToEdit.body,
+    userId: postToEdit.userId,
+    reactions: postToEdit.reactions,
+    createdAt: postToEdit.createdAt,
     userId: postToEdit.userId
   });
 
-  const { title, body, userId } = editedPost;
+  const { id, title, body, userId, createdAt } = editedPost;
 
   const postChangeHandler  = (e) => {
     setEditedPost(prevState => {return {...prevState, [e.target.name]: e.target.value}});
@@ -41,17 +45,18 @@ const EditPostView = () => {
     if (postIsValid) {
       try {
         setPostReqStatus('pending');
-        dispatch(updatePost({title, body, userId})).unwrap();
+        dispatch(editPost({id, title, body, userId, createdAt, reactions: editedPost.reactions}))
+          .unwrap();
         setEditedPost({
           title: '',
           body: '',
           userId: ''
         });
       } catch(err) {
-        console.error('Unable to update post');
+        console.error('Unable to update post\n', err);
       } finally {
         setPostReqStatus('idle');
-        navigate('/');
+        navigate(`/post/${postToEdit.id}`);
       }
     }
   }
