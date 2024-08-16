@@ -103,6 +103,15 @@ const postsSlice = createSlice({
         const posts = state.posts.filter(post => post.id !== id);
         state.posts = [...posts, action.payload]
       })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        if (!action.payload?.id) {
+          console.error('No post ID provided, delete failed', action.payload);
+          return;
+        }
+        const { id } = action.payload;
+        const posts = state.posts.filter((post) => post.id !== id);
+        state.posts = posts;
+      });
   } 
 });
 
