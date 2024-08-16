@@ -9,26 +9,32 @@ const initialState = {
   error: null
 };
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', () => (
-  axios.get(POSTS_URL)
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => (
+  await axios.get(POSTS_URL)
     .then((response) => response.data)
     .catch(e => console.log(e))
 ));
 
-export const addPost = createAsyncThunk('posts/addPost', (newPost) => (
-  axios.post(POSTS_URL, newPost)
+export const addPost = createAsyncThunk('posts/addPost', async (newPost) => (
+  await axios.post(POSTS_URL, newPost)
     .then((response) => response.data)
 ));
 
-export const editPost = createAsyncThunk('posts/editPost', (editedPost) => {
-  const { id } = editedPost;
-  return axios.put(`${POSTS_URL}/${id}`, editedPost)
-    .then((response) => response.data)
+export const editPost = createAsyncThunk('posts/editPost', async (editedPost) => {
+  try {
+    const { id } = editedPost;
+    const res = await axios.put(`${POSTS_URL}/${id}`, editedPost)
+    return res.data
+  } catch(err) {
+    // return err.message;
+    return editedPost; // Return edited post to update state for posts that don't exist on fake API
+  }
+  
 });
 
-export const deletePost = createAsyncThunk('posts/deletePost', (postToDelete) => {
+export const deletePost = createAsyncThunk('posts/deletePost', async (postToDelete) => {
   const { id } = postToDelete;
-  return axios.delete(`${POSTS_URL}/${id}`, postToDelete)
+  return await axios.delete(`${POSTS_URL}/${id}`, postToDelete)
     .then((response) => {
       if (response.status === 200) {
         return postToDelete;
