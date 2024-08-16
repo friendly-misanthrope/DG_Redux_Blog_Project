@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { selectPostById } from './postsSlice';
 import PostAuthorView from './PostAuthorView';
 import CreatedAt from './CreatedAtView';
@@ -9,7 +9,6 @@ const SinglePostView = () => {
 
   const { postId } = useParams();
   const post = useSelector((state) => selectPostById(state, Number(postId)));
-  console.log(post)
 
   if (post) {
     return (
@@ -17,6 +16,7 @@ const SinglePostView = () => {
       <h2>{post.title}</h2>
       <p>{post.body}</p>
       <p className="postCredit">
+        <Link to={`/post/edit/${post.id}`}>Edit Post</Link>
         <PostAuthorView userId={post.userId} />
         <CreatedAt timestamp={post.createdAt} />
       </p>

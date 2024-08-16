@@ -10,7 +10,7 @@ const PostsExcerpt = ({ post }) => {
       {
         post.body.length > 75 ?
         <p className="excerpt">{post.body.substring(0, 75)}...</p>
-          : <p>{post.body}</p>
+          : <p className="excerpt">{post.body}</p>
       }
       
       <p className="postCredit">
