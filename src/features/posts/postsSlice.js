@@ -26,6 +26,17 @@ export const editPost = createAsyncThunk('posts/editPost', async (editedPost) =>
     .then((response) => response.data)
 });
 
+export const deletePost = createAsyncThunk('posts/deletePost', (postToDelete) => {
+  const { id } = postToDelete;
+  axios.delete(`${POSTS_URL}/${id}`, postToDelete)
+    .then((response) => {
+      if (response.status === 200) {
+        return postToDelete;
+      }
+      return `${response.status}: ${response.statusText}`;
+    });
+});
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
