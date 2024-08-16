@@ -31,7 +31,7 @@ const EditPostView = () => {
     userId: postToEdit.userId
   });
 
-  const { id, title, body, userId, createdAt } = editedPost;
+  const { title, body, userId } = editedPost;
 
   const postChangeHandler  = (e) => {
     setEditedPost(prevState => {return {...prevState, [e.target.name]: e.target.value}});
@@ -45,7 +45,7 @@ const EditPostView = () => {
     if (postIsValid) {
       try {
         setPostReqStatus('pending');
-        dispatch(editPost({id, title, body, userId, createdAt, reactions: editedPost.reactions}))
+        dispatch(editPost(editedPost))
           .unwrap();
         setEditedPost({
           title: '',

@@ -20,15 +20,15 @@ export const addPost = createAsyncThunk('posts/addPost', (newPost) => (
     .then((response) => response.data)
 ));
 
-export const editPost = createAsyncThunk('posts/editPost', async (editedPost) => {
+export const editPost = createAsyncThunk('posts/editPost', (editedPost) => {
   const { id } = editedPost;
-  return await axios.put(`${POSTS_URL}/${id}`, editedPost)
+  return axios.put(`${POSTS_URL}/${id}`, editedPost)
     .then((response) => response.data)
 });
 
 export const deletePost = createAsyncThunk('posts/deletePost', (postToDelete) => {
   const { id } = postToDelete;
-  axios.delete(`${POSTS_URL}/${id}`, postToDelete)
+  return axios.delete(`${POSTS_URL}/${id}`, postToDelete)
     .then((response) => {
       if (response.status === 200) {
         return postToDelete;
