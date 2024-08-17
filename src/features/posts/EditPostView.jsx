@@ -34,7 +34,9 @@ const EditPostView = () => {
   const { title, body, userId } = editedPost;
 
   const postChangeHandler  = (e) => {
-    setEditedPost(prevState => {return {...prevState, [e.target.name]: e.target.value}});
+    setEditedPost(prevState => {
+      return {...prevState, [e.target.name]: e.target.value}
+    });
   }
 
   const postIsValid = [title, body, userId].every(Boolean) && postReqStatus === 'idle';
