@@ -15,10 +15,18 @@ body {
 
 input,
 textarea,
-button,
 select {
   font: inherit;
   margin-bottom: 1em;
+  background-color: #424242;
+  color: whitesmoke;
+}
+
+button {
+  background-color: rgb(53, 152, 209);
+  font: inherit;
+  margin-bottom: 1rem;
+  color: whitesmoke;
 }
 
 header {
@@ -108,6 +116,7 @@ form {
 
 textarea {
   height: 200px;
+  background-color: #424242;
 }
 
 .postCredit {
