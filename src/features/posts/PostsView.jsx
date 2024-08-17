@@ -1,28 +1,19 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useSelector } from "react-redux";
 import { BallTriangle } from "react-loader-spinner";
 import PostsExcerpt from "./PostsExcerptView";
 import {
   selectAllPosts,
-  fetchPosts,
   getPostsStatus,
   getPostsError,
 } from "./postsSlice";
 
 const PostsView = () => {
-  const dispatch = useDispatch();
 
   // postsSlice selectors
   const posts = useSelector(selectAllPosts);
   const postsStatus = useSelector(getPostsStatus);
   const postsError = useSelector(getPostsError);
-
-  // JSONplaceholder API fetch
-  useEffect(() => {
-    if (postsStatus === "idle") {
-      dispatch(fetchPosts());
-    }
-  }, [postsStatus, dispatch]);
 
   let content;
 
