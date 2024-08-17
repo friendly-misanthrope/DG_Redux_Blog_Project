@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 
-/* html {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  background-color: whitesmoke;
-  color: #000;
-} */
-
 body {
   min-height: 100vh;
   font-size: 1.5rem;
@@ -36,6 +30,8 @@ header {
   color: whitesmoke;
   position: sticky;
   top: 0;
+  border-left: 1rem solid rgb(146, 59, 146);
+  /* border-right: 1rem solid rgb(139, 62, 139); */
 }
 
 nav {
@@ -80,9 +76,10 @@ section {
 
 article {
   margin: 0.5em 0.5em 0.5em 0;
-  border: 1px solid whitesmoke;
-  border-radius: 10px;
+  border: 0.2rem solid rgb(146, 59, 146);
+  border-radius: 0.75rem;
   padding: 1em;
+  background-color: #424242;
 }
 
 article p {
