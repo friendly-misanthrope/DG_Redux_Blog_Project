@@ -5,13 +5,14 @@ import Layout from "./components/Layout";
 import EditPostView from "./features/posts/EditPostView";
 import UsersView from "./features/users/UsersView";
 import SingleUserView from "./features/users/SingleUserView";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<PostsView />} />
+
         <Route path="post">
           <Route index element={<AddPostView />} />
           <Route path=":postId" element={<SinglePostView />} />
@@ -22,6 +23,8 @@ const App = () => {
           <Route index element={<UsersView />} />
           <Route path=':userId' element={<SingleUserView />} />
         </Route>
+
+        <Route path='*' element={<Navigate to='/' replace />} />
       </Route>
     </Routes>
   );
