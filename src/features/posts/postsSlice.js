@@ -6,7 +6,8 @@ const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts';
 const initialState = {
   posts: [],
   status: 'idle',
-  error: null
+  error: null,
+  count: 0
 };
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => (
@@ -60,6 +61,9 @@ const postsSlice = createSlice({
       if (post && post.reactions[reaction] > 0) {
         post.reactions[reaction]--;
       }
+    },
+    increaseCount(state, action) {
+      state.count = state.count + 1;
     }
   },
   extraReducers(builder) {
@@ -127,5 +131,7 @@ export const selectPostById = (state, postId) =>
 
 export const getPostsStatus = (state) => state.posts.status;
 export const getPostsError = (state) => state.posts.error;
-export const { postAdded, reactionAdded, reactionRemoved } = postsSlice.actions;
+export const getCount = (state) => state.posts.count;
+
+export const { postAdded, reactionAdded, reactionRemoved, increaseCount } = postsSlice.actions;
 export default postsSlice.reducer;
