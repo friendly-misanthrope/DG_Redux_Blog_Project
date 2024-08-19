@@ -42,6 +42,15 @@ header {
   /* border-right: 1rem solid rgb(139, 62, 139); */
 }
 
+ol a, ol a:visited, ul a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+ol li, ul li {
+  margin: 0.75rem 0;
+}
+
 nav {
   display: flex;
   justify-content: flex-end;
