@@ -1,5 +1,5 @@
 import AddPostView from "./features/posts/AddPostView";
-import PostsView from "./features/posts/postsView";
+import PostsView from "./features/posts/PostsView";
 import SinglePostView from "./features/posts/SinglePostView";
 import Layout from './components/Layout';
 import EditPostView from "./features/posts/EditPostView";
