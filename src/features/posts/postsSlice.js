@@ -61,9 +61,6 @@ const postsSlice = createSlice({
       if (post && post.reactions[reaction] > 0) {
         post.reactions[reaction]--;
       }
-    },
-    increaseCount(state, action) {
-      state.count = state.count + 1;
     }
   },
   extraReducers(builder) {
