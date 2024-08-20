@@ -1,9 +1,10 @@
+import React from "react";
 import PostAuthorView from "./PostAuthorView";
 import CreatedAt from "./CreatedAtView";
 import ReactionsView from "./ReactionsView";
 import { Link } from "react-router-dom";
 
-const PostsExcerpt = ({ post }) => {
+let PostsExcerpt = ({ post }) => {
   return (
     <article>
       <h2>{post.title}</h2>
@@ -22,4 +23,6 @@ const PostsExcerpt = ({ post }) => {
     </article>
   );
 }
+
+PostsExcerpt = React.memo(PostsExcerpt);
 export default PostsExcerpt;
