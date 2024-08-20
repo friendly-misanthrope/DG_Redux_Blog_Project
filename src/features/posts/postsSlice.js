@@ -132,7 +132,7 @@ export const selectPostById = (state, postId) =>
 // createSelector creates a memoized selector which takes
 // any number of input fns and uses their return values
 // in the output fn to return a new value
-export const selectPostByUser = createSelector(
+export const selectPostsByUser = createSelector(
   [selectAllPosts, (state, userId) => userId],
   (posts, userId) => posts.filter(post => post.userId === userId)
 );
