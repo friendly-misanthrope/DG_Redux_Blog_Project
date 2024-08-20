@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 import { sub } from 'date-fns';
 import axios from 'axios';
 const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts';
@@ -128,6 +128,14 @@ const postsSlice = createSlice({
 export const selectAllPosts = (state) => state.posts.posts;
 export const selectPostById = (state, postId) => 
   state.posts.posts.find(post => post.id === postId);
+
+// createSelector creates a memoized selector which takes
+// any number of input fns and uses their return values
+// in the output fn to return a new value
+export const selectPostByUser = createSelector(
+  [selectAllPosts, (state, userId) => userId],
+  (posts, userId) => posts.filter(post => post.userId === userId)
+);
 
 export const getPostsStatus = (state) => state.posts.status;
 export const getPostsError = (state) => state.posts.error;
