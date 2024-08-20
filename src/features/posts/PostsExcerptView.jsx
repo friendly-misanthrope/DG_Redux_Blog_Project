@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import PostAuthorView from "./PostAuthorView";
 import CreatedAt from "./CreatedAtView";
 import ReactionsView from "./ReactionsView";
@@ -24,5 +24,5 @@ let PostsExcerpt = ({ post }) => {
   );
 }
 
-PostsExcerpt = React.memo(PostsExcerpt);
+// PostsExcerpt = React.memo(PostsExcerpt);
 export default PostsExcerpt;
