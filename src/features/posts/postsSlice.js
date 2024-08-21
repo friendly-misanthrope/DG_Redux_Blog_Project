@@ -64,14 +64,14 @@ const postsSlice = createSlice({
   reducers: {
     reactionAdded(state, action) {
       const {postId, reaction} = action.payload;
-      const post = state.posts.find(post => post.id === postId);
+      const post = state.entities[postId]
       if (post) {
         post.reactions[reaction]++;
       }
     },
     reactionRemoved(state, action) {
       const {postId, reaction} = action.payload;
-      const post = state.posts.find(post => post.id === postId);
+      const post = state.entities[postId]
       if (post && post.reactions[reaction] > 0) {
         post.reactions[reaction]--;
       }
