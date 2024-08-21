@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { BallTriangle } from "react-loader-spinner";
 import PostsExcerpt from "./PostsExcerptView";
 import {
-  selectAllPosts,
+  selectPostIds,
   getPostsStatus,
   getPostsError,
 } from "./postsSlice";
@@ -11,7 +11,7 @@ import {
 const PostsView = () => {
 
   // postsSlice selectors
-  const posts = useSelector(selectAllPosts);
+  const orderedPostIds = useSelector(selectPostIds)
   const postsStatus = useSelector(getPostsStatus);
   const postsError = useSelector(getPostsError);
 
@@ -30,11 +30,8 @@ const PostsView = () => {
     </>
     // Render post content if fetch successful
   } else if (postsStatus === "fulfilled") {
-    const orderedPosts = posts.slice()
-      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-
-    content = orderedPosts.map((post) => (
-      <PostsExcerpt key={post.id} post={post} />
+    content = orderedPostIds.map((postId) => (
+      <PostsExcerpt key={postId} postId={postId} />
     ));
     // PostsView content if fetch not successful
   } else if (postsStatus === "rejected") {
