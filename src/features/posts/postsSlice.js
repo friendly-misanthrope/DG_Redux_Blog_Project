@@ -64,14 +64,16 @@ const postsSlice = createSlice({
   reducers: {
     reactionAdded(state, action) {
       const {postId, reaction} = action.payload;
-      const post = state.entities[postId]
+      const post = state.entities[postId];
+      // Todo: remove console.log() statement
+      console.log(state.entities)
       if (post) {
         post.reactions[reaction]++;
       }
     },
     reactionRemoved(state, action) {
       const {postId, reaction} = action.payload;
-      const post = state.entities[postId]
+      const post = state.entities[postId];
       if (post && post.reactions[reaction] > 0) {
         post.reactions[reaction]--;
       }
@@ -95,7 +97,7 @@ const postsSlice = createSlice({
           }
           return post;
         });
-        state.posts = state.posts.concat(posts);
+        postsAdapter.upsertMany(state, posts);
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = 'rejected';
@@ -113,6 +115,7 @@ const postsSlice = createSlice({
           coffee: 0
         }
         state.posts.push(action.payload);
+        postsAdapter.addOne(action.payload);
       })
       .addCase(editPost.fulfilled, (state, action) => {
         action.payload.userId = Number(action.payload.userId)
@@ -120,9 +123,7 @@ const postsSlice = createSlice({
           console.error("No post ID provided, update failed\n", action.payload);
           return;
         }
-        const { id } = action.payload;
-        const posts = state.posts.filter(post => post.id !== id);
-        state.posts = [...posts, action.payload]
+        postsAdapter.upsertOne(state, action.payload);
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         if (!action.payload?.id) {
@@ -130,15 +131,16 @@ const postsSlice = createSlice({
           return;
         }
         const { id } = action.payload;
-        const posts = state.posts.filter((post) => post.id !== id);
-        state.posts = posts;
+        postsAdapter.removeOne(state, id);
       });
   } 
 });
 
-export const selectAllPosts = (state) => state.posts.posts;
-export const selectPostById = (state, postId) => 
-  state.posts.posts.find(post => post.id === postId);
+export const {
+  selectAll: selectAllPosts,
+  selectById: selectPostById,
+  selectIds: selectPostIds
+} = postsAdapter.getSelectors(state => state.posts);
 
 // createSelector creates a memoized selector which takes
 // any number of input fns and uses their return values
