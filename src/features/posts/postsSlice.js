@@ -22,12 +22,12 @@ const postsAdapter = createEntityAdapter({
 const initialState = postsAdapter.getInitialState({
   status: 'idle',
   error: null
-})
+});
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => (
   await axios.get(POSTS_URL)
     .then((response) => response.data)
-    .catch(e => console.log(e))
+    .catch(e => console.error(e))
 ));
 
 export const addPost = createAsyncThunk('posts/addPost', async (newPost) => (
@@ -65,8 +65,6 @@ const postsSlice = createSlice({
     reactionAdded(state, action) {
       const {postId, reaction} = action.payload;
       const post = state.entities[postId];
-      // Todo: remove console.log() statement
-      console.log(state.entities)
       if (post) {
         post.reactions[reaction]++;
       }
@@ -118,7 +116,7 @@ const postsSlice = createSlice({
         postsAdapter.addOne(action.payload);
       })
       .addCase(editPost.fulfilled, (state, action) => {
-        action.payload.userId = Number(action.payload.userId)
+        action.payload.userId = Number(action.payload.userId);
         if (!action.payload?.id) {
           console.error("No post ID provided, update failed\n", action.payload);
           return;
